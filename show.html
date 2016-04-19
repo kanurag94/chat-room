@@ -1,0 +1,38 @@
+<script>
+
+function processRequest(request)
+{
+	var list = JSON.parse(request.responseText);
+	for (var i = 0; i < list.length; i++)
+	{
+		var data = list[i];
+		
+		var pMessage = document.createElement("p");
+		pMessage.appendChild(document.createTextNode(data.message));		
+		document.body.appendChild(pMessage);
+	}
+	
+	window.scrollTo(0,document.body.scrollHeight);
+}
+
+function repeat()
+{
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function()
+	{
+		if (request.readyState == 4 && request.status == 200)
+		{
+			processRequest(request);
+		}
+	};
+	request.open("GET", "messages.php", true);
+	request.send();
+	//alert("Hello");
+	
+	//call this method again
+	setTimeout(repeat, 1000);
+}
+
+setTimeout(repeat, 1000);
+
+</script>
