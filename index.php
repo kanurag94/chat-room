@@ -8,7 +8,6 @@ function ajax_post(){
     var url = "post-message.php";
     var fn = document.getElementById("first_name").value;
     var ln = document.getElementById("message").value;
-	document.getElementById("first_name").value = "";
 	document.getElementById("message").value = "";
     var vars = "firstname="+fn+"&message="+ln;
 	
@@ -46,7 +45,9 @@ function processRequest(request)
 		messageDiv.appendChild(pMessage);
 	}
 	
-	//window.scrollTo(0,document.body.scrollHeight);
+	
+	
+	window.scrollTo(0,document.body.scrollHeight);
 }
 
 function repeat()
@@ -64,6 +65,7 @@ function repeat()
 	
 	//call this method again
 	setTimeout(repeat, 1000);
+	
 }
 
 setTimeout(repeat, 1000);
@@ -72,10 +74,17 @@ setTimeout(repeat, 1000);
 
 </head>
 <body>
-<h2>Chat Room</h2>
-First Name: <input id="first_name" name="first_name" type="text">  <br><br>
-Message: <input id="message" name="message" type="text"> <br><br>
-<input name="myBtn" type="submit" value="Submit Data" onclick="ajax_post();"> <br><br>
+
+<form name="test">
+
+<div id = "chat" style = "position:fixed;left:400px">
+	<h2>Chat Room</h2>
+	First Name: <input id="first_name" name="first_name" type="text">  <br><br>
+	Message: <input id="message" name="message" type="text"> <br><br>
+	<input name="myBtn" type="submit" value="Submit Data" onclick="ajax_post(); return false;"> <br><br>
+</div>
+
+</div>
 
 <div id ="messages">
 
