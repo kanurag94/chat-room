@@ -150,3 +150,11 @@ body {
 .blog-footer p:last-child {
   margin-bottom: 0;
 }
+
+#submitmessages .btn {
+	margin-left: 10px;
+}
+
+.chat li.left .chat-body {
+    margin-left: 0px;
+}

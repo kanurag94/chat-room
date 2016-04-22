@@ -1,5 +1,7 @@
 <?php
 
+date_default_timezone_set('Asia/Kolkata');
+
 $db_name = "chatroom";
 $mysql_user = "root";
 $mysql_password = "";
