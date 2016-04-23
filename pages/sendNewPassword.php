@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn= new mysqli("localhost","957862","20dhawan","957862");
+$conn= new mysqli("localhost","957862","password","957862");
 $rs=$conn->query("select * from Credentials");
 $flag=0;
 while($entry=$rs->fetch_assoc())
