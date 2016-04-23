@@ -1,3 +1,4 @@
+
 body {
     background-color: #f8f8f8;
 }
@@ -20,80 +21,67 @@ body {
     }
 }
 
-.navbar-top-links {
+
+.navbar {
     margin-right: 0;
 }
 
-.navbar-top-links li {
+.navbar li {
     display: inline-block;
 }
 
-.navbar-top-links li:last-child {
+.navbar li:last-child {
     margin-right: 15px;
 }
 
-.navbar-top-links li a {
+.navbar li a {
     padding: 15px;
     min-height: 50px;
 }
 
-.navbar-top-links .dropdown-menu li {
+.navbar .dropdown-menu li {
     display: block;
 }
 
-.navbar-top-links .dropdown-menu li:last-child {
+.navbar .dropdown-menu li:last-child {
     margin-right: 0;
 }
 
-.navbar-top-links .dropdown-menu li a {
+.navbar .dropdown-menu li a {
     padding: 3px 20px;
     min-height: 0;
 }
 
-.navbar-top-links .dropdown-menu li a div {
+.navbar .dropdown-menu li a div {
     white-space: normal;
 }
-/*
-.navbar-top-links .dropdown-messages,
-.navbar-top-links .dropdown-tasks,
-.navbar-top-links .dropdown-alerts {
-    width: 310px;
-    min-width: 0;
-}
 
-.navbar-top-links .dropdown-messages {
-    margin-left: 5px;
-}
-
-.navbar-top-links .dropdown-tasks {
-    margin-left: -59px;
-}
-
-.navbar-top-links .dropdown-alerts {
-    margin-left: -123px;
-}
-
-.navbar-top-links .dropdown-user {
+.navbar .dropdown-menu
+{
+    width: 250px;
+    min-width:0;
     right: 0;
     left: auto;
-}*/
+}
+
+/** dropdown**/
+.navbar .nav li:hover .dropdown-menu,.chat-panel .btn-group:hover .dropdown-menu
+{
+	display:block;
+}
+
+.navbar .nav .dropdown-menu,.chat-panel .btn-group .dropdown-menu{
+	display:none;
+}
+/** end dr_down **/
 
 @media(min-width:768px) {
-    .sidebar {
-        z-index: 1;
-        position: absolute;
-        width: 250px;
-        margin-top: 51px;
-    }
-
-    .navbar-top-links .dropdown-messages,
-    .navbar-top-links .dropdown-tasks,
-    .navbar-top-links .dropdown-alerts {
+.navbar .dropdown-menu,
+    {
         margin-left: auto;
     }
 }
 
-/*chat*/
 .chat {
     margin: 0;
     padding: 0;
@@ -121,13 +109,10 @@ body {
 .panel .slidedown .glyphicon,
 .chat .glyphicon {
     margin-right: 5px;
-    height: 400px;
-   
 }
 
 .chat-panel .panel-body {
-    height: 400px;
-    
+    height: auto;
     overflow-y: scroll;
 }
 
@@ -149,10 +134,6 @@ body {
 
 .blog-footer p:last-child {
   margin-bottom: 0;
-}
-
-#submitmessages .btn {
-	margin-left: 10px;
 }
 
 .chat li.left .chat-body {
