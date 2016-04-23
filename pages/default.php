@@ -50,6 +50,22 @@ background-color:black;
 	<div class="form-group">
 	<button class="form-control btn-primary" id="login" type="submit">Login</button>
 	</div>
+	
+	</form>
+	
+	<center><h3>OR</h3></center>
+	
+	
+	
+	<form class="login-form" action="anonymous.php" method="post">
+		
+	<div class="form-group">
+	<label for="username">User name</label>
+	<input class="form-control" id="username" type="text" name="username">
+	</div>
+	<div class="form-group">
+	<button class="form-control btn-primary" id="login" type="submit">Login as Anonymous</button>
+	</div>
 	</form>
 </div>
 </div>

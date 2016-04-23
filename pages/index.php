@@ -13,6 +13,7 @@
     <link href="../font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	
 	<script src="../js/chat.js" type="text/javascript"></script>
+	
 </head>
 
 <body>
@@ -22,7 +23,7 @@
 	
 	//unset($_COOKIE["member"]);
 	
-if(($_COOKIE["member"] == "")){
+if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
 header('Location: default.php');
 }
 ?>
@@ -177,7 +178,7 @@ header('Location: default.php');
                             </div>
                         </div>
                         <!-- panel-hding -->
-                        <div class="panel-body" >
+                        <div id="messagesview" class="panel-body" >
                             <ul class="chat" id="messages">
                             </ul>
                         </div>
@@ -214,7 +215,10 @@ header('Location: default.php');
         <!-- /#page-rapr -->
 	
 	
-	<footer class="blog-footer">
+	<footer class="blog-footer"><a href="logout.php">
+				<button class="btn btn-warning btn-sm" id="btn-chat" >
+							Log Out
+				</button></a>
       <p>Chat box for Chatting by <a href="#"> Chat box team</a>.</p>
       <p>
         <a href="#">Back to top</a>
