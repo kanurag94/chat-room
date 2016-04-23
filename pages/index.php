@@ -16,6 +16,16 @@
 </head>
 
 <body>
+	
+
+	<?php 
+	
+	//unset($_COOKIE["member"]);
+	
+if(($_COOKIE["member"] == "")){
+header('Location: default.php');
+}
+?>
 
     <div id="wrapper">
 
@@ -177,10 +187,10 @@
 							
 								<div class="input-group">
 								
-								<input id="btn-name" type="text" class="form-control input-sm" placeholder="Type your name here..." style ="margin-bottom:5px;" />
+					
 									<input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your message here..." />
 									<span class="input-group-btn">
-										<button class="btn btn-warning btn-lg" id="btn-chat" onclick="ajax_post(); return false;">
+										<button class="btn btn-warning btn-sm" id="btn-chat" onclick="ajax_post(); return false;">
 											Send
 										</button>
 									</span>

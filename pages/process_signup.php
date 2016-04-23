@@ -1,5 +1,8 @@
 <?php
+
+require "connect.php";
 session_start();
+
 $email=$_POST["email"];
 $fname=$_POST["fname"];
 $lname=$_POST["lname"];
@@ -18,8 +21,8 @@ else if($password!=$confirmpassword)
 }
 else
 {
-    $conn=new mysqli("localhost:3306","root","password","chatroom");
-    $rs=$conn->query("select * from Credentials");
+    
+    $rs=$conn->query("select * from credentials");
     $flag=1;
     while($entry=$rs->fetch_assoc())
     {
@@ -33,7 +36,7 @@ else
     }
     if($flag==1)
     {
-        $conn->query("insert into Credentials values('$email','$fname','$lname','$gender','$password')");
+        $conn->query("insert into credentials(email,fname,lname,gender,password) values('$email','$fname','$lname','$gender','$password')");
         $_SESSION["email"]=$email;
         $_SESSION["fname"]=$fname;
         $_SESSION["lname"]=$lname;

@@ -6,8 +6,8 @@
 <body>
 <?php
 session_start();
-$conn=new mysqli("localhost:3306","root","password","chatroom");
-$rs=$conn->query("select* from Credentials");
+require 'connect.php';
+$rs=$conn->query("select* from credentials");
 $flag=0;
 while($entry=$rs->fetch_assoc())
 {
@@ -19,8 +19,12 @@ while($entry=$rs->fetch_assoc())
 		$_SESSION["lname"]=$entry["lname"];
 		$_SESSION["gender"]=$entry["gender"];
 		$_SESSION["alert"]="Success";
-		header('Location: default.php');
-		$flag=1;
+		
+		$cookie_name = "member";
+		$cookie_value =$_SESSION["fname"];
+		setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
+		header('Location: index.php');
+		$flag=1;		
 	}
 }
 if($flag==0)
@@ -29,9 +33,6 @@ if($flag==0)
 	header('Location: default.php');
 }
 $conn->close();
-
-
-
 ?>
 </body>
-</html>
+</html

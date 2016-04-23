@@ -20,10 +20,10 @@ function ajax_post(){
 	var hr = new XMLHttpRequest();
 	// Create some variables we need to send to our PHP file
 	var url = "post-message.php";
-	var fn = document.getElementById("btn-name").value;
+	//var fn = document.getElementById("btn-name").value;
 	var ln = document.getElementById("btn-input").value;
 	document.getElementById("btn-input").value = "";
-	var vars = "firstname="+fn+"&message="+ln;
+	var vars = "&message="+ln; 
 	
 	hr.open("POST", url, true);
 	// Set content type header information for sending url encoded variables in the request
@@ -57,7 +57,7 @@ function processRequest(request)
 	
 	//scroll to bottom on new messages
 	if (list.length > 0)
-		document.getElementById("messages").lastChild.scrollIntoView(false)
+		document.getElementById("messages").lastChild.scrollIntoView(true);
 }
 
 function repeat()
