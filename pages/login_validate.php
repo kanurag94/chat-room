@@ -13,6 +13,7 @@ while($entry=$rs->fetch_assoc())
 {
 	if($_POST["email"]==$entry["email"]&&$_POST["password"]==$entry["password"])
 	{
+		$_SESSION["id"]=$entry["id"];
 		$_SESSION["email"]=$entry["email"];
 		$_SESSION["password"]=$entry["password"];
 		$_SESSION["fname"]=$entry["fname"];

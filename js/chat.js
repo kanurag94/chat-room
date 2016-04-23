@@ -34,7 +34,7 @@ function ajax_post(){
 
 var lastid = 0;
 
-function processRequest(request)
+function processMessagesRequest(request)
 {
 	var list = JSON.parse(request.responseText);
 	
@@ -63,7 +63,7 @@ function processRequest(request)
 	}
 }
 
-function repeat()
+function repeatMessages()
 {
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function()
@@ -72,11 +72,11 @@ function repeat()
 		{
 			if (request.status == 200)
 			{
-				processRequest(request);
+				processMessagesRequest(request);
 			}
 			
 			//call this method again after we have received response successfully (somehow this gets called even on timeout weird o.O
-			setTimeout(repeat, 1000);
+			setTimeout(repeatMessages, 1000);
 		}
 	};
 	request.open("GET", "get-message.php?lastid=" + lastid, true);
@@ -84,4 +84,35 @@ function repeat()
 	request.send();
 }
 
-setTimeout(repeat, 1000);
+setTimeout(repeatMessages, 1000);
+
+function processOnlineUsersRequest(request)
+{
+	var list = JSON.parse(request.responseText);
+	
+	var onlineDiv = document.getElementById('onlineusers');
+	onlineDiv.innerHTML = "Online Users: " + list;
+}
+
+function repeatOnlineUsers()
+{
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function()
+	{
+		if (request.readyState == 4)
+		{
+			if (request.status == 200)
+			{
+				processOnlineUsersRequest(request);
+			}
+			
+			//call this method again after we have received response successfully (somehow this gets called even on timeout weird o.O
+			setTimeout(repeatOnlineUsers, 30000);
+		}
+	};
+	request.open("GET", "online.php", true);
+	request.timeout = 30000;
+	request.send();
+}
+
+setTimeout(repeatOnlineUsers, 1000);

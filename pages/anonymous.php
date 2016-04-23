@@ -2,9 +2,13 @@
 
 session_start();
 
-$cookie_value = "Anonymous ".$_POST["username"];
-$cookie_name = "member";		
-		setcookie($cookie_name, $cookie_value, time()+(8000*30), "/"); // expire when browser is closed
-		header('Location: index.php');
+$name = "Anonymous - ".$_POST["username"];
+
+$_SESSION["id"] = 'anonymous';
+$_SESSION["fname"] = $name;
+$_SESSION["email"] = 'anonymous' . $name . '@anonymous.com';
+
+setcookie("member", $name, time()+(8000*30), "/"); // expire when browser is closed
+header('Location: index.php');
 
 ?>

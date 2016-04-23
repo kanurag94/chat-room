@@ -123,7 +123,7 @@ header('Location: default.php');
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>
                     </ul>
                     
@@ -176,6 +176,9 @@ header('Location: default.php');
                                     </li>
                                 </ul>
                             </div>
+							<div id="onlineusers" style="margin-top: 10px;">
+							  Online Users: Loading
+							</div>
                         </div>
                         <!-- panel-hding -->
                         <div id="messagesview" class="panel-body" >
