@@ -68,16 +68,20 @@ function repeat()
 	var request = new XMLHttpRequest();
 	request.onreadystatechange = function()
 	{
-		if (request.readyState == 4 && request.status == 200)
+		if (request.readyState == 4)
 		{
-			processRequest(request);
+			if (request.status == 200)
+			{
+				processRequest(request);
+			}
+			
+			//call this method again after we have received response successfully (somehow this gets called even on timeout weird o.O
+			setTimeout(repeat, 1000);
 		}
 	};
 	request.open("GET", "get-message.php?lastid=" + lastid, true);
+	request.timeout = 5000;
 	request.send();
-	
-	//call this method again
-	setTimeout(repeat, 1000);	
 }
 
 setTimeout(repeat, 1000);

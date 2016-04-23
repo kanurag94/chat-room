@@ -8,7 +8,7 @@ $timestamp = date("Y-m-d H:i:s");
 
 $imageExtensions = array("gif", "jpg", "jpeg", "png");
 $urlExtension = pathinfo($message, PATHINFO_EXTENSION);
-if (in_array($urlExtension, $imageExtensions))
+if (in_array($urlExtension, $imageExtensions) && filter_var($message, FILTER_VALIDATE_URL))
 {
 	//if is image
 	$message = "<img src='$message' /><br />$message</a>";
