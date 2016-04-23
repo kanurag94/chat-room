@@ -24,15 +24,16 @@ background-color:black;
 	</div>
 	<ul class="nav navbar-nav navbar-right">
 	<li><a href="SignUp.php"><span class="glyphicon glyphicon-list-alt"></span> Sign Up </a></li>
+        <li><a href="default.php"><span class="glyphicon glyphicon-log-in"></span> Login </a></li>
 	</ul>
 </div>
 </nav>
 <br><br><br><br><br><br>
 <div class="row">
 <div class="col-sm-4 col-xs-1"></div>
-<div class="col-sm-4 col-xs-10 formpanel panel panel-default" style="background-color:white"><div class="panel-heading">Login</div><div class="panel-body">
-	
-	<form class="login-form" action="login_validate.php" method="post">
+<div class="col-sm-4 col-xs-10 formpanel panel panel-default" style="background-color:white">
+<div class="panel-heading">Forgot your Password?</div><div class="panel-body">
+	<form action="sendNewPassword.php" method="get">
 	<?php 
 	session_start();
 	if(isset($_SESSION["alert"])){
@@ -40,29 +41,11 @@ background-color:black;
 	unset($_SESSION["alert"]);}
 	?>
 	<div class="form-group">
-	<label for="email">E-Mail</label>
+	<label for="email">Enter the E-Mail </label>
 	<input class="form-control" id="email" type="text" name="email">
 	</div>
 	<div class="form-group">
-	<label for="password">Password</label>
-	<input class="form-control" id="password" type="password" name="password">
-	</div>
-	<div class="form-group">
-	<button class="form-control btn-primary" id="login" type="submit">Login</button>
-	</div>
-	<div class="form-group">
-        <span style="float:right;"><a href="forgot_password.php">I forgot my password.</a></span>
-	</div>
-	</form>
-	<br>
-	<center><h3>OR</h3></center>
-	<form class="login-form" action="anonymous.php" method="post">
-	<div class="form-group">
-	<label for="username">User name</label>
-	<input class="form-control" id="username" type="text" name="username">
-	</div>
-	<div class="form-group">
-	<button class="form-control btn-primary" id="login" type="submit">Login as Anonymous</button>
+	<button class="form-control btn-primary" id="login" type="submit">Send Password</button>
 	</div>
 	</form>
 </div>
