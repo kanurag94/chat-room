@@ -6,7 +6,7 @@ var MESSAGE_CODE = '<li class="left clearfix">\
 		<div class="header">\
 			<strong class="primary-font">{name}</strong>\
 			<small class="pull-right text-muted">\
-				<i class="fa fa-clock-o fa-fw"></i> {passedtime}\
+				<i class="fa fa-clock-o fa-fw"></i> {time}\
 			</small>\
 		</div>\
 		<p>\
@@ -48,7 +48,7 @@ function processRequest(request)
 		lastid = data.id;
 		
 		var message_str = MESSAGE_CODE;
-		message_str = message_str.replace("{passedtime}", data.passedtime);
+		message_str = message_str.replace("{time}", data.time);
 		message_str = message_str.replace("{name}", data.name);
 		message_str = message_str.replace("{message}", data.message);
 		
@@ -57,7 +57,10 @@ function processRequest(request)
 	
 	//scroll to bottom on new messages
 	if (list.length > 0)
-		document.getElementById("messages").lastChild.scrollIntoView(true);
+	{
+		var divScroll = document.getElementById("messagesview");
+		divScroll.scrollTop = divScroll.scrollHeight;
+	}
 }
 
 function repeat()

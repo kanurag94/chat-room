@@ -177,7 +177,7 @@ header('Location: default.php');
                             </div>
                         </div>
                         <!-- panel-hding -->
-                        <div class="panel-body" >
+                        <div id="messagesview" class="panel-body" >
                             <ul class="chat" id="messages">
                             </ul>
                         </div>
