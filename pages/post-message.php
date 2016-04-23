@@ -2,7 +2,7 @@
 
 require "connect.php";
 
-$first_name = $_POST["firstname"];
+$first_name = $_COOKIE["member"];
 $message = $_POST["message"];
 $timestamp = date("Y-m-d H:i:s");
 
