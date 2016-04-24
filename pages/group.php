@@ -1,8 +1,30 @@
-<?php 
-session_start();
-//unset($_COOKIE["member"]);
-if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
-	header('Location: default.php');
+<?php
+if (isset($_GET['id']))
+{
+	require "connect.php";
+	
+	$query = "SELECT * FROM groups WHERE id = '" . $_GET['id'] . "';";
+	$result = $conn->query($query);
+	
+	if (mysqli_num_rows($result))
+	{
+		session_start();
+		
+		$arr = $result->fetch_assoc();
+		
+		$groupName = $arr['name'];
+		$groupID = $arr['id'];
+		
+		$result->free();
+	}
+	else
+	{
+		die('wrong group id');
+	}
+}
+else
+{
+	die('error');
 }
 ?>
 <!DOCTYPE html>
@@ -23,8 +45,8 @@ if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
 		var userName = "<?php echo $_SESSION['fname']; ?>";
 		var userID = <?php echo $_SESSION['id']; ?>;
 		
-		var groupName = "all";
-		var groupID = 0;
+		var groupName = "<?php echo $groupName; ?>";
+		var groupID = <?php echo $groupID; ?>;
 	</script>
 	
 	<script src="../js/chat.js" type="text/javascript"></script>
@@ -32,6 +54,17 @@ if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
 </head>
 
 <body>
+	
+
+	<?php 
+	
+	//unset($_COOKIE["member"]);
+	
+if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
+header('Location: default.php');
+}
+?>
+
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -140,7 +173,7 @@ if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
         <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Dashboard</h1>
+                    <h1 class="page-header"><?php echo $groupName; ?></h1>
                 </div>
                 <!-- col-lg-12 -->
             </div>

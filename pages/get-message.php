@@ -5,13 +5,19 @@ require "connect.php";
 $outputArray = array();
 
 $lastID = 0;
+$groupID = 0;
 
 if (isset($_GET['lastid']))
 {
 	$lastID = $_GET['lastid'];
 }
 
-$query = "SELECT * FROM chat WHERE id > $lastID;";
+if (isset($_GET['group']))
+{
+	$groupID = $_GET['group'];
+}
+
+$query = "SELECT * FROM chat WHERE groupid = $groupID AND id > $lastID;";
 
 if($results = $conn->query($query))
 {

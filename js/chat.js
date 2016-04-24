@@ -23,7 +23,7 @@ function ajax_post(){
 	//var fn = document.getElementById("btn-name").value;
 	var ln = document.getElementById("btn-input").value;
 	document.getElementById("btn-input").value = "";
-	var vars = "&message="+ln; 
+	var vars = "group="+ groupID + "&message=" + ln; 
 	
 	hr.open("POST", url, true);
 	// Set content type header information for sending url encoded variables in the request
@@ -79,7 +79,7 @@ function repeatMessages()
 			setTimeout(repeatMessages, 1000);
 		}
 	};
-	request.open("GET", "get-message.php?lastid=" + lastid, true);
+	request.open("GET", "get-message.php?lastid=" + lastid + "&group=" + groupID, true);
 	request.timeout = 5000;
 	request.send();
 }

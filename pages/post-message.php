@@ -4,6 +4,7 @@ require "connect.php";
 
 $first_name = $_COOKIE["member"];
 $message = $_POST["message"];
+$groupID = $_POST["group"];
 $timestamp = date("Y-m-d H:i:s");
 
 $imageExtensions = array("gif", "jpg", "jpeg", "png");
@@ -21,7 +22,7 @@ else
 
 $message = mysqli_real_escape_string($conn, $message);
 
-$mysql_qry = "insert into chat(name,message,time) values ('$first_name','$message', '$timestamp')";
+$mysql_qry = "INSERT INTO chat(name,message,time,groupid) VALUES ('$first_name','$message', '$timestamp', $groupID)";
 
 if($conn->query($mysql_qry)===TRUE){
 	echo "";
