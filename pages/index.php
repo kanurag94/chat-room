@@ -42,7 +42,7 @@ header('Location: default.php');
                     <a class="dropdown" data-toggle="dropdown" href="#">
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu "><!--dropdown-message-->
+                    <ul class="dropdown-menu " style ="margin-top:0px;"><!--dropdown-message-->
                         
                         <li>
                             <a href="#">
@@ -82,7 +82,7 @@ header('Location: default.php');
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-alerts">
+                    <ul class="dropdown-menu dropdown-alerts" style ="margin-top:0px;">
                         <li>
                             <a href="#">
                                 <div>
@@ -117,7 +117,7 @@ header('Location: default.php');
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
+                    <ul class="dropdown-menu dropdown-user" style ="margin-top:0px;">
                         <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
                         </li>
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
