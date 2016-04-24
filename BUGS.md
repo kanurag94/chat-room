@@ -9,3 +9,4 @@
 #check all input values through php for bad codes and show error messages in good ui
 #beep file should be placed in respective directory
 #need to add security checks while creating and adding users in groups + deleting
+#must use sessions only, no cookies

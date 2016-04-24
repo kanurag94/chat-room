@@ -18,7 +18,7 @@ if($results = $conn->query($query))
 	{
 		$groupID = $row[0];
 		$name = $conn->query("SELECT name FROM groups WHERE id = $groupID")->fetch_row()[0]; //no need to check                      
-        $groupsList .= "<li><a href='group.php?id=$groupID'><i class='fa fa-user fa-fw'></i> $name</a></li>";
+		$groupsList .= "<li><a href='group.php?id=$groupID'><i class='fa fa-user fa-fw'></i> $name</a></li>";
 	}
 	
 	$results->free();

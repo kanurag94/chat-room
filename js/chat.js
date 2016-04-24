@@ -15,6 +15,8 @@ var MESSAGE_CODE = '<li class="left clearfix">\
 	</div>\
 </li>';
 
+var NOTIFICATIONS_CODE = '<li><a href="group.php?id={groupid}"><i class="fa fa-envelope fa-fw"></i> {count} Unread Messages</a></li>';
+
 function ajax_post(){
 	// Create our XMLHttpRequest object
 	var hr = new XMLHttpRequest();
@@ -59,9 +61,10 @@ function processMessagesRequest(request)
 	if (list.length > 0)
 	{
 		var divScroll = document.getElementById("messagesview");
-		divScroll.scrollTop = divScroll.scrollHeight;
-		beep();
+		divScroll.scrollTop = divScroll.scrollHeight;	
+		if(list.length <3){beep();}
 	}
+	
 }
 
 function repeatMessages()
@@ -122,3 +125,53 @@ function beep() {
 var snd = new Audio("beep.wav"); // buffers automatically when created
 snd.play();
 }
+
+function processNotificationsRequest(request)
+{
+	var list = JSON.parse(request.responseText);
+	
+	var notifyDiv = document.getElementById('notifications');
+	
+	//remove old notifications
+	while (notifyDiv.hasChildNodes())
+	{
+		notifyDiv.removeChild(notifyDiv.lastChild);
+	}
+
+	//append new notifications
+	for (var i = 0; i < list.length; i++)
+	{
+		var data = list[i];
+		
+		var notify_str = NOTIFICATIONS_CODE;
+		notify_str = notify_str.replace("{groupid}", data.id);
+		notify_str = notify_str.replace("{count}", data.count);
+		
+		notifyDiv.insertAdjacentHTML("beforeend", notify_str);		
+	}
+}
+
+function updateNotifications()
+{
+	var request = new XMLHttpRequest();
+	request.onreadystatechange = function()
+	{
+		if (request.readyState == 4)
+		{
+			if (request.status == 200)
+			{
+				processNotificationsRequest(request);
+			}
+			
+			//call this method again after we have received response successfully (somehow this gets called even on timeout weird o.O
+			setTimeout(updateNotifications, 1000);
+		}
+	};
+	
+	request.open("POST", "notifications.php", true);
+	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	request.timeout = 5000;
+	request.send("data=" + groupList);
+}
+
+setTimeout(updateNotifications, 1000);
