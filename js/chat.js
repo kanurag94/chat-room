@@ -53,6 +53,11 @@ function processMessagesRequest(request)
 		message_str = message_str.replace("{message}", data.message);
 		
 		messageDiv.insertAdjacentHTML("beforeend", message_str);
+		if(list.length < 3){
+		beep();	
+	
+	}
+		
 	}
 	
 	//scroll to bottom on new messages
@@ -116,3 +121,8 @@ function repeatOnlineUsers()
 }
 
 setTimeout(repeatOnlineUsers, 1000);
+
+function beep() {
+var snd = new Audio("beep.wav"); // buffers automatically when created
+snd.play();
+}
