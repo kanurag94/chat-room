@@ -52,12 +52,7 @@ function processMessagesRequest(request)
 		message_str = message_str.replace("{name}", data.name);
 		message_str = message_str.replace("{message}", data.message);
 		
-		messageDiv.insertAdjacentHTML("beforeend", message_str);
-		if(list.length < 3){
-		beep();	
-	
-	}
-		
+		messageDiv.insertAdjacentHTML("beforeend", message_str);		
 	}
 	
 	//scroll to bottom on new messages
@@ -65,6 +60,7 @@ function processMessagesRequest(request)
 	{
 		var divScroll = document.getElementById("messagesview");
 		divScroll.scrollTop = divScroll.scrollHeight;
+		beep();
 	}
 }
 

@@ -1,9 +1,29 @@
 <?php 
 session_start();
-//unset($_COOKIE["member"]);
+
 if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
 	header('Location: default.php');
 }
+
+require "connect.php";
+
+$userID = $_SESSION['id'];
+$query = "SELECT groupid FROM groupmembers WHERE userid = $userID;";
+
+$groupsList = '';
+
+if($results = $conn->query($query))
+{
+	while ($row = $results->fetch_row())
+	{
+		$groupID = $row[0];
+		$name = $conn->query("SELECT name FROM groups WHERE id = $groupID")->fetch_row()[0]; //no need to check                      
+        $groupsList .= "<li><a href='group.php?id=$groupID'><i class='fa fa-user fa-fw'></i> $name</a></li>";
+	}
+	
+	$results->free();
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -47,37 +67,8 @@ if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu " style ="margin-top:0px;"><!--dropdown-message-->
-                        
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>Member 1</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>some messge about a topic from member 1</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>Member 2</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Some message about a topic from member 2</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
+						<li><a href="create-group.php"><i class="fa fa-user fa-fw"></i> Create Group</a></li>
+                        <?php echo $groupsList; ?>
                     </ul>
                     <!-- drpdwn-msg -->
                 </li>
@@ -122,10 +113,8 @@ if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user" style ="margin-top:0px;">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
+                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
+                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
                         <li class="divider"></li>
                         <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                         </li>

@@ -1,4 +1,11 @@
 <?php
+
+session_start();
+
+if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
+	header('Location: default.php');
+}
+
 if (isset($_GET['id']))
 {
 	require "connect.php";
@@ -7,15 +14,31 @@ if (isset($_GET['id']))
 	$result = $conn->query($query);
 	
 	if (mysqli_num_rows($result))
-	{
-		session_start();
-		
+	{		
 		$arr = $result->fetch_assoc();
 		
 		$groupName = $arr['name'];
 		$groupID = $arr['id'];
 		
 		$result->free();
+				
+		$userID = $_SESSION['id'];
+		$query = "SELECT groupid FROM groupmembers WHERE userid = $userID;";
+
+		$groupsList = '';
+
+		if($results = $conn->query($query))
+		{
+			while ($row = $results->fetch_row())
+			{
+				$tempGroupID = $row[0];
+				$name = $conn->query("SELECT name FROM groups WHERE id = $tempGroupID")->fetch_row()[0]; //no need to check                      
+				$groupsList .= "<li><a href='group.php?id=$tempGroupID'><i class='fa fa-user fa-fw'></i> $name</a></li>";
+			}
+			
+			$results->free();
+		}
+
 	}
 	else
 	{
@@ -80,40 +103,11 @@ header('Location: default.php');
                         <i class="fa fa-envelope fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu " style ="margin-top:0px;"><!--dropdown-message-->
-                        
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>Member 1</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>some messge about a topic from member 1</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>Member 2</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Some message about a topic from member 2</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
+						<li><a href="create-group.php"><i class="fa fa-user fa-fw"></i> Create Group</a></li>
+                        <?php echo $groupsList; ?>
                     </ul>
                     <!-- drpdwn-msg -->
-                </li>
+				</li>
                 
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -196,19 +190,19 @@ header('Location: default.php');
                                 <ul class="dropdown-menu slidedown" style ="margin-top:0px;">
                                     
                                     <li>
-                                        <a href="#">
-                                            <i class="fa fa-check-circle fa-fw"></i> Available
+                                        <a href="add-members-group.php?id=<?php echo $groupID; ?>">
+                                            <i class="fa fa-user fa-fw"></i> Add Members
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#">
-                                            <i class="fa fa-times fa-fw"></i> Busy
+                                            <i class="fa fa-times fa-fw"></i> Delete Group
                                         </a>
                                     </li>
                                     <li class="divider"></li>
 									<li>
                                         <a href="#">
-                                            <i class="fa fa-sign-out fa-fw"></i> Sign out!
+                                            <i class="fa fa-sign-out fa-fw"></i> Exit from group!
                                         </a>
                                     </li>
                                 </ul>
