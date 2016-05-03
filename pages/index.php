@@ -4,6 +4,9 @@ session_start();
 if(($_COOKIE["member"] == "" &&!isset($_COOKIE["member"]))){
 	header('Location: default.php');
 }
+else if(!isset($_SESSION["id"])){
+	header('Location: default.php');
+}
 
 require "connect.php";
 
@@ -11,13 +14,15 @@ $userID = $_SESSION['id'];
 $query = "SELECT groupid FROM groupmembers WHERE userid = $userID;";
 
 $groupsList = '';
+$groupIDS = array();
 
 if($results = $conn->query($query))
 {
 	while ($row = $results->fetch_row())
 	{
 		$groupID = $row[0];
-		$name = $conn->query("SELECT name FROM groups WHERE id = $groupID")->fetch_row()[0]; //no need to check                      
+		$groupIDS[] = $groupID;
+		$name = $conn->query("SELECT name FROM groups WHERE id = $groupID")->fetch_row()[0]; //no need to check  
 		$groupsList .= "<li><a href='group.php?id=$groupID'><i class='fa fa-user fa-fw'></i> $name</a></li>";
 	}
 	
@@ -45,6 +50,7 @@ if($results = $conn->query($query))
 		
 		var groupName = "all";
 		var groupID = 0;
+		var groupList = '<?php echo json_encode($groupIDS); ?>';
 	</script>
 	
 	<script src="../js/chat.js" type="text/javascript"></script>
@@ -77,37 +83,13 @@ if($results = $conn->query($query))
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-alerts" style ="margin-top:0px;">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">1 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">1 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
+                    <ul id="notifications" class="dropdown-menu dropdown-alerts" style ="margin-top:0px;">
+                        <li><a href="#"><i class="fa fa-envelope fa-fw"></i> Loading</a></li>
                     </ul>
                     <!-- /.drpdwn-al -->
                 </li>
                 <!-- drpdwn -->
+				
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>

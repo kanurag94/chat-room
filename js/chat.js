@@ -62,7 +62,9 @@ function processMessagesRequest(request)
 	{
 		var divScroll = document.getElementById("messagesview");
 		divScroll.scrollTop = divScroll.scrollHeight;	
-		if(list.length <3){beep();}
+		beep();
+		
+		setTimeout(updateLastIdData, 1000);
 	}
 	
 }
@@ -126,6 +128,29 @@ var snd = new Audio("beep.wav"); // buffers automatically when created
 snd.play();
 }
 
+function updateLastIdData()
+{
+	var request = new XMLHttpRequest();
+	/*
+	//unnecessary as we are calling this on new messages already
+	request.onreadystatechange = function()
+	{
+		if (request.readyState == 4)
+		{
+			//call this method again after we have received response successfully (somehow this gets called even on timeout weird o.O
+			setTimeout(updateLastIdData, 1000);
+		}
+	};
+	*/
+	
+	var vars = "lastid=" + lastid + "&groupid=" + groupID; 
+	
+	request.open("POST", "post-lastid.php", true);
+	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	request.timeout = 5000;
+	request.send(vars);
+};
+
 function processNotificationsRequest(request)
 {
 	var list = JSON.parse(request.responseText);
@@ -153,25 +178,31 @@ function processNotificationsRequest(request)
 
 function updateNotifications()
 {
-	var request = new XMLHttpRequest();
-	request.onreadystatechange = function()
+	if (groupList != '[]')
 	{
-		if (request.readyState == 4)
+		//if user is any group
+		
+		var request = new XMLHttpRequest();
+		request.onreadystatechange = function()
 		{
-			if (request.status == 200)
+			if (request.readyState == 4)
 			{
-				processNotificationsRequest(request);
+				if (request.status == 200)
+				{
+					processNotificationsRequest(request);
+				}
+				
+				//call this method again after we have received response successfully (somehow this gets called even on timeout weird o.O
+				setTimeout(updateNotifications, 1000);
 			}
-			
-			//call this method again after we have received response successfully (somehow this gets called even on timeout weird o.O
-			setTimeout(updateNotifications, 1000);
-		}
-	};
+		};
+		
+		request.open("POST", "notifications.php", true);
+		request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		request.timeout = 5000;
+		request.send("data=" + groupList);
+	}
 	
-	request.open("POST", "notifications.php", true);
-	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	request.timeout = 5000;
-	request.send("data=" + groupList);
 }
 
 setTimeout(updateNotifications, 1000);

@@ -26,12 +26,14 @@ if (isset($_GET['id']))
 		$query = "SELECT groupid FROM groupmembers WHERE userid = $userID;";
 
 		$groupsList = '';
+		$groupIDS = array();
 
 		if($results = $conn->query($query))
 		{
 			while ($row = $results->fetch_row())
 			{
 				$tempGroupID = $row[0];
+				$groupIDS[] = $tempGroupID;
 				$name = $conn->query("SELECT name FROM groups WHERE id = $tempGroupID")->fetch_row()[0]; //no need to check                      
 				$groupsList .= "<li><a href='group.php?id=$tempGroupID'><i class='fa fa-user fa-fw'></i> $name</a></li>";
 			}
@@ -70,6 +72,7 @@ else
 		
 		var groupName = "<?php echo $groupName; ?>";
 		var groupID = <?php echo $groupID; ?>;
+		var groupList = '<?php echo json_encode($groupIDS); ?>';
 	</script>
 	
 	<script src="../js/chat.js" type="text/javascript"></script>
@@ -113,37 +116,13 @@ header('Location: default.php');
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-bell fa-fw"></i>  <i class="fa fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-alerts" style ="margin-top:0px;">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-comment fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">1 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">1 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
+                    <ul id="notifications" class="dropdown-menu dropdown-alerts" style ="margin-top:0px;">
+                        <li><a href="#"><i class="fa fa-envelope fa-fw"></i> Loading</a></li>
                     </ul>
                     <!-- /.drpdwn-al -->
                 </li>
                 <!-- drpdwn -->
+				
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
